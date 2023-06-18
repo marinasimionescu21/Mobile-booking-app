@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:licenta_app/home_screen.dart';
+import 'package:licenta_app/widgets/hotel_screen.dart';
 import 'package:licenta_app/start_screen.dart';
 
 class FirstPage extends StatefulWidget {
