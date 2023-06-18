@@ -50,8 +50,14 @@ class _NewHotelState extends State<NewHotel> {
       showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: const Text('Invalid input'),
-                content: const Text('Please enter valid data'),
+                title: const Text(
+                  'Invalid input',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: const Text(
+                  'Please enter valid data',
+                  style: TextStyle(color: Colors.white),
+                ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(),
@@ -92,8 +98,8 @@ class _NewHotelState extends State<NewHotel> {
               controller: _titleController,
               maxLength: 50,
               decoration: const InputDecoration(
-                label: Text('Hotel name'),
-              ),
+                  label:
+                      Text('Hotel name',)),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -107,6 +113,7 @@ class _NewHotelState extends State<NewHotel> {
               children: [
                 Expanded(
                     child: TextField(
+                  style: const TextStyle(color: Colors.white),
                   controller: _priceController,
                   maxLength: 50,
                   keyboardType: TextInputType.number,
@@ -120,9 +127,12 @@ class _NewHotelState extends State<NewHotel> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(_selectedDate == null
-                          ? 'No date chosen'
-                          : formatter.format(_selectedDate!)),
+                      Text(
+                        _selectedDate == null
+                            ? 'No date chosen'
+                            : formatter.format(_selectedDate!),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                       IconButton(
                           onPressed: _presentDatePicker,
                           icon: const Icon(Icons.calendar_month)),
@@ -139,7 +149,10 @@ class _NewHotelState extends State<NewHotel> {
                     items: Category.values
                         .map((category) => DropdownMenuItem(
                             value: category,
-                            child: Text(category.name.toUpperCase())))
+                            child: Text(
+                              category.name.toUpperCase(),
+                              style: const TextStyle(color: Colors.white),
+                            )))
                         .toList(),
                     onChanged: (value) {
                       setState(() {

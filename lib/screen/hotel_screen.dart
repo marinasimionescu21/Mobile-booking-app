@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(context) {
     Widget mainContent = const Center(
-      child: Text('Nothing found. Start adding '),
+      child: Text(
+        'Nothing found. Start adding ',
+        style: const TextStyle(color: Colors.white, fontSize: 20),
+      ),
     );
 
     if (_registeredHotels.isNotEmpty) {
@@ -73,13 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 1, 91, 82),
         actions: [
           IconButton(
             onPressed: _openAddHotelScreen,
             icon: const Icon(Icons.add),
           )
         ],
-        title: const Text('LodgingEase'),
+        title: const Text('Your Places'),
       ),
       body: Column(
         children: [

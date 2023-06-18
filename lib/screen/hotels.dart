@@ -4,15 +4,21 @@ import '../widgets/hotel_item.dart';
 import '../models/hotels.dart';
 
 class HotelsScreen extends StatelessWidget {
-  const HotelsScreen({Key? key, required this.title, required this.hotels})
+  const HotelsScreen(
+      {Key? key,
+      this.title,
+      required this.hotels,
+      required this.onToggleFavorite})
       : super(key: key);
-  final String title;
+  final String? title;
   final List<Hotels> hotels;
+  final void Function(Hotels hotel) onToggleFavorite;
 
   void selectHotel(BuildContext context, Hotels hotel) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => HotelDetailsScreen(
               hotel: hotel,
+              onToggleFavorite: onToggleFavorite,
             )));
   }
 
@@ -30,7 +36,10 @@ class HotelsScreen extends StatelessWidget {
     if (hotels.isEmpty) {
       content = Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Text('Uh oh, no hotels found here!'),
+        const Text(
+          'Uh oh, no hotels found here!',
+          style: TextStyle(fontSize: 30, color: Colors.white),
+        ),
         const SizedBox(height: 16),
         Text('Try changing the filters and search again.',
             style: Theme.of(context)
@@ -39,9 +48,13 @@ class HotelsScreen extends StatelessWidget {
                 .copyWith(color: Theme.of(context).colorScheme.onBackground)),
       ]));
     }
+
+    if (title == null) {
+      return content;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );

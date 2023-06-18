@@ -3,15 +3,24 @@ import 'package:flutter/material.dart';
 import '../models/hotels.dart';
 
 class HotelDetailsScreen extends StatelessWidget {
-  const HotelDetailsScreen({Key? key, required this.hotel}) : super(key: key);
+  const HotelDetailsScreen({Key? key, required this.hotel, required this.onToggleFavorite}) : super(key: key);
 
   final Hotels hotel;
+  final void Function(Hotels hotel) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(hotel.hotelName),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onToggleFavorite(hotel);
+            },
+            icon: const Icon(Icons.star),
+          )
+        ],
       ),
       body: Column(
         children: [
