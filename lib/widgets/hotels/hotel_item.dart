@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:licenta_app/models/hotels.dart';
+import 'package:licenta_app/models/users_hotel.dart';
 
 class HotelItem extends StatelessWidget {
   const HotelItem({Key? key, required this.hotel}) : super(key: key);

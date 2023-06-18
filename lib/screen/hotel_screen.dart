@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:licenta_app/models/hotels.dart';
+import 'package:licenta_app/models/users_hotel.dart';
 import 'package:licenta_app/widgets/chart/chart.dart';
 import 'package:licenta_app/widgets/hotels/hotels_list.dart';
 import 'package:licenta_app/widgets/new_hotel.dart';
@@ -18,26 +16,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<Hotels> _registeredHotels = [
     Hotels(
-        hotelName: 'Hotel 1',
-        description: 'Hotel 1 description',
-        price: 100.0,
-        //imageUrl: 'assets/images/hotel1.jpg',
-        createdAt: DateTime.now(),
-        category: Category.hotel),
-    Hotels(
-        hotelName: 'Hotel 2',
-        description: 'Hotel 2 description',
+        hotelName: 'Apartment 12',
+        description: 'Apartament description',
         price: 200.0,
-        //imageUrl: 'assets/images/hotel2.jpg',
         createdAt: DateTime.now(),
         category: Category.apartment),
-    Hotels(
-        hotelName: 'Hotel 3',
-        description: 'Hotel 3 description',
-        price: 300.0,
-        //imageUrl: 'assets/images/hotel3.jpg',
-        createdAt: DateTime.now(),
-        category: Category.guestHouse),
   ];
 
   _openAddHotelScreen() {

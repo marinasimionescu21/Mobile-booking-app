@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:licenta_app/models/hotels.dart';
+import 'package:licenta_app/models/users_hotel.dart';
 import 'package:licenta_app/widgets/hotels/hotel_item.dart';
 
 class HotelsList extends StatelessWidget {
