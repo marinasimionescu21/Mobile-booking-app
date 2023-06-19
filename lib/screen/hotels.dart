@@ -8,17 +8,15 @@ class HotelsScreen extends StatelessWidget {
       {Key? key,
       this.title,
       required this.hotels,
-      required this.onToggleFavorite})
+      })
       : super(key: key);
   final String? title;
   final List<Hotels> hotels;
-  final void Function(Hotels hotel) onToggleFavorite;
 
   void selectHotel(BuildContext context, Hotels hotel) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => HotelDetailsScreen(
               hotel: hotel,
-              onToggleFavorite: onToggleFavorite,
             )));
   }
 

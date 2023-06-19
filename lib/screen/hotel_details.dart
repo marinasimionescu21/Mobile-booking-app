@@ -1,24 +1,40 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/hotels.dart';
+import '../provider/favorites_provider.dart';
 
-class HotelDetailsScreen extends StatelessWidget {
-  const HotelDetailsScreen({Key? key, required this.hotel, required this.onToggleFavorite}) : super(key: key);
+class HotelDetailsScreen extends ConsumerWidget {
+  const HotelDetailsScreen({
+    Key? key,
+    required this.hotel,
+  }) : super(key: key);
 
   final Hotels hotel;
-  final void Function(Hotels hotel) onToggleFavorite;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteHotels = ref.watch(favoritesHotelProvider);
+    final isFavorite = favoriteHotels.contains(hotel);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(hotel.hotelName),
         actions: [
           IconButton(
             onPressed: () {
-              onToggleFavorite(hotel);
+              final wasAdded = ref
+                  .read(favoritesHotelProvider.notifier)
+                  .toggleHotelFavoriteStatus(hotel);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      wasAdded ? 'Hotel added as a favorite' : 'Hotel removed'),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
             },
-            icon: const Icon(Icons.star),
+            icon: Icon(isFavorite ? Icons.star : Icons.star_border),
           )
         ],
       ),

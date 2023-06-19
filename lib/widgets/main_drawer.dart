@@ -35,19 +35,36 @@ class MainDrawer extends StatelessWidget {
       ),
       ListTile(
         leading: Icon(
-          Icons.home,
+          Icons.person,
           size: 30,
           color: Theme.of(context).colorScheme.primary,
         ),
         title: Text(
-          'Hotels',
+          'Profile',
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 20,
               ),
         ),
         onTap: () {
-          onSelectedScreen('hotels');
+          onSelectedScreen('profile');
+        },
+      ),
+      ListTile(
+        leading: Icon(
+          Icons.add_home_outlined,
+          size: 30,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: Text(
+          'Add Place',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+              ),
+        ),
+        onTap: () {
+          onSelectedScreen('addPlace');
         },
       ),
       ListTile(
@@ -64,7 +81,7 @@ class MainDrawer extends StatelessWidget {
               ),
         ),
         onTap: () {
-          //onSelectedScreen('chat');
+          onSelectedScreen('chat');
         },
       ),
       ListTile(

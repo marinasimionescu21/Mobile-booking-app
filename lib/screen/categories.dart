@@ -6,9 +6,8 @@ import '../models/category.dart';
 import '../models/hotels.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key, required this.onToggleFavorite, required this.availableHotels}) : super(key: key);
+  const CategoriesScreen({Key? key, required this.availableHotels}) : super(key: key);
   
-  final void Function(Hotels hotel) onToggleFavorite;
   final List<Hotels> availableHotels;
 
   void _selectCategory(BuildContext context, CategoryOfHotels category) {
@@ -21,7 +20,6 @@ class CategoriesScreen extends StatelessWidget {
             builder: (ctx) => HotelsScreen(
                   title: category.title,
                   hotels: filteredHotels,
-                  onToggleFavorite: onToggleFavorite,
                 )));
   }
 

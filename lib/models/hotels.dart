@@ -22,9 +22,9 @@ class Hotels {
     required this.isAffordable,
     required this.isPricy,
     required this.isLuxurious,
-  }); //: id = uuid.v4();
+  }) : id = uuid.v4();
 
-  //final String id;
+  final String id;
   final String hotelName;
   final String description;
   final double price;
@@ -40,4 +40,5 @@ class Hotels {
   String get formattedDate {
     return formatter.format(createdAt);
   }
+
 }

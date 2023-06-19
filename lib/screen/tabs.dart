@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:licenta_app/models/dummy_data.dart';
-import 'package:licenta_app/models/hotels.dart';
 import 'package:licenta_app/screen/categories.dart';
 import 'package:licenta_app/screen/filters.dart';
 import 'package:licenta_app/screen/hotel_screen.dart';
 import 'package:licenta_app/screen/hotels.dart';
 import 'package:licenta_app/widgets/main_drawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:licenta_app/provider/favorites_provider.dart';
+
+import '../provider/filters_provider.dart';
 
 const kInitialFilters = {
   Filter.afordable: false,
@@ -13,45 +15,17 @@ const kInitialFilters = {
   Filter.luxurious: false,
 };
 
-class TabsScreen extends StatefulWidget {
+class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<TabsScreen> createState() {
     return _TabsScreenState();
   }
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Hotels> _favoriteHotels = [];
-  Map<Filter, bool> _selectedFilters = kInitialFilters;
-
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 3),
-      ),
-    );
-  }
-
-  void _toggleHotelFavoriteStatus(Hotels hotels) {
-    final isExisting = _favoriteHotels.contains(hotels);
-
-    if (isExisting) {
-      setState(() {
-        _favoriteHotels.remove(hotels);
-        _showInfoMessage('Removed from favorites');
-      });
-    } else {
-      setState(() {
-        _favoriteHotels.add(hotels);
-        _showInfoMessage('Added to favorites');
-      });
-    }
-  }
 
   void _selectPage(int index) {
     setState(() {
@@ -62,51 +36,36 @@ class _TabsScreenState extends State<TabsScreen> {
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      final result =
-          await Navigator.of(context).push<Map<Filter, bool>>(MaterialPageRoute(
-        builder: (ctx) => FilterScreen(
-          currentFilters: _selectedFilters,
-        ),
+      await Navigator.of(context).push<Map<Filter, bool>>(MaterialPageRoute(
+        builder: (ctx) => const FilterScreen(),
       ));
-
-      setState(() {
-        _selectedFilters = result ?? kInitialFilters;
-      });
+    }
+    if (identifier == 'addPlace') {
+      // ignore: use_build_context_synchronously
+      await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (ctx) => const HomeScreen()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final availableHottels = dummyHotels.where((element) {
-      if (_selectedFilters[Filter.afordable]! && !element.isAffordable) {
-        return false;
-      }
-      if (_selectedFilters[Filter.pricy]! && !element.isPricy) {
-        return false;
-      }
-      if (_selectedFilters[Filter.luxurious]! && !element.isLuxurious) {
-        return false;
-      }
-      return true;
-    }).toList();
-
+    final availableHottels = ref.watch(filteredHotelsProvider);
     Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleHotelFavoriteStatus,
       availableHotels: availableHottels,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = HotelsScreen(
-        hotels: _favoriteHotels,
-        onToggleFavorite: _toggleHotelFavoriteStatus,
-      );
-      activePageTitle = 'Favorites';
+      activePage = const HomeScreen();
+      activePageTitle = 'Map';
     }
 
     if (_selectedPageIndex == 2) {
-      activePage = const HomeScreen();
-      activePageTitle = 'Profile';
+      final favoriteHotels = ref.watch(favoritesHotelProvider);
+      activePage = HotelsScreen(
+        hotels: favoriteHotels,
+      );
+      activePageTitle = 'Favorites';
     }
 
     return Scaffold(
@@ -120,8 +79,8 @@ class _TabsScreenState extends State<TabsScreen> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.house_siding), label: 'Categories'),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
