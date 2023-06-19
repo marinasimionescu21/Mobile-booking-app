@@ -15,7 +15,7 @@ class HotelItemTrait extends StatelessWidget {
           size: 17,
           color: Colors.white,
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
           label,
           style: const TextStyle(

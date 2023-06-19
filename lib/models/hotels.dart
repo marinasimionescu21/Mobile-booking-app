@@ -19,6 +19,9 @@ class Hotels {
     required this.createdAt,
     required this.affordability,
     required this.capacity,
+    required this.isAffordable,
+    required this.isPricy,
+    required this.isLuxurious,
   }); //: id = uuid.v4();
 
   //final String id;
@@ -30,6 +33,9 @@ class Hotels {
   final List<String> category;
   final DateTime createdAt;
   final String capacity;
+  final bool isAffordable;
+  final bool isPricy;
+  final bool isLuxurious;
 
   String get formattedDate {
     return formatter.format(createdAt);

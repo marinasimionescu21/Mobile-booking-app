@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Widget mainContent = const Center(
       child: Text(
         'Nothing found. Start adding ',
-        style: const TextStyle(color: Colors.white, fontSize: 20),
+        style: TextStyle(color: Colors.white, fontSize: 20),
       ),
     );
 
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 1, 91, 82),
+        backgroundColor: const Color.fromARGB(255, 1, 91, 82),
         actions: [
           IconButton(
             onPressed: _openAddHotelScreen,

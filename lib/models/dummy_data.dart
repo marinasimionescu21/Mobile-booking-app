@@ -36,7 +36,10 @@ List<Hotels> dummyHotels = [
           'https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg',
       category: ['c1'],
       createdAt: DateTime.now(),
-      capacity: '2'),
+      capacity: '2',
+      isAffordable: true,
+      isPricy: false,
+      isLuxurious: false),
   Hotels(
     hotelName: 'Cali Mykonos',
     description:
@@ -48,6 +51,9 @@ List<Hotels> dummyHotels = [
     createdAt: DateTime.now(),
     affordability: Affordability.luxurious,
     capacity: '10',
+    isPricy: false,
+    isAffordable: false,
+    isLuxurious: true,
   ),
   Hotels(
     hotelName: 'Raffles Hotel',
@@ -60,6 +66,9 @@ List<Hotels> dummyHotels = [
     createdAt: DateTime.now(),
     affordability: Affordability.luxurious,
     capacity: '4',
+    isPricy: false,
+    isAffordable: false,
+    isLuxurious: true,
   ),
   Hotels(
     hotelName: 'Guest House Forno',
@@ -72,6 +81,9 @@ List<Hotels> dummyHotels = [
     createdAt: DateTime.now(),
     affordability: Affordability.pricey,
     capacity: '8',
+    isAffordable: false,
+    isPricy: true,
+    isLuxurious: false,
   ),
   Hotels(
     hotelName: 'Clifton House',
@@ -83,5 +95,8 @@ List<Hotels> dummyHotels = [
     createdAt: DateTime.now(),
     affordability: Affordability.pricey,
     capacity: '4',
+    isAffordable: false,
+    isPricy: true,
+    isLuxurious: false,
   )
 ];

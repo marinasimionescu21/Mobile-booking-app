@@ -23,8 +23,7 @@ class StartScreen extends StatelessWidget {
               OutlinedButton(
                   onPressed: startApp,
                   style: OutlinedButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Color.fromARGB(255, 131, 62, 222),
+                      backgroundColor: const Color.fromARGB(255, 131, 62, 222),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 20),
                       textStyle: GoogleFonts.lato(
@@ -36,8 +35,7 @@ class StartScreen extends StatelessWidget {
               OutlinedButton(
                   onPressed: startApp,
                   style: OutlinedButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: Color.fromARGB(255, 131, 62, 222),
+                    backgroundColor: const Color.fromARGB(255, 131, 62, 222),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 20),
                     textStyle: GoogleFonts.lato(

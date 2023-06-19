@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+  const MainDrawer({Key? key, required this.onSelectedScreen})
+      : super(key: key);
+
+  final void Function(String identifier) onSelectedScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,9 @@ class MainDrawer extends StatelessWidget {
                 fontSize: 20,
               ),
         ),
-        onTap: () {},
+        onTap: () {
+          onSelectedScreen('hotels');
+        },
       ),
       ListTile(
         leading: Icon(
@@ -58,7 +63,9 @@ class MainDrawer extends StatelessWidget {
                 fontSize: 20,
               ),
         ),
-        onTap: () {},
+        onTap: () {
+          //onSelectedScreen('chat');
+        },
       ),
       ListTile(
         leading: Icon(
@@ -73,7 +80,9 @@ class MainDrawer extends StatelessWidget {
                 fontSize: 20,
               ),
         ),
-        onTap: () {},
+        onTap: () {
+          onSelectedScreen('filters');
+        },
       ),
     ]));
   }
