@@ -1,3 +1,4 @@
+import 'package:licenta_app/models/category.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,12 +7,11 @@ final formatter = DateFormat.yMd();
 
 const uuid = Uuid();
 
-enum Category { hotel, guestHouse, apartment }
-
 const categoryIcons = {
   Category.hotel: Icons.hotel,
   Category.guestHouse: Icons.house,
   Category.apartment: Icons.apartment,
+  Category.villa: Icons.villa,
 };
 
 class Hotels {
@@ -27,7 +27,7 @@ class Hotels {
   final String hotelName;
   final String description;
   final double price;
-  final Category category;
+  final CategoryOfHotels category;
   final DateTime createdAt;
 
   String get formattedDate {
@@ -43,6 +43,7 @@ class HotelsBucket {
 
   HotelsBucket.forCategory(List<Hotels> hotels, this.category)
       : hotels =
+            // ignore: unrelated_type_equality_checks
             hotels.where((element) => element.category == category).toList();
 
   final Category category;

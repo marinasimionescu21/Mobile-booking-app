@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:licenta_app/models/users_hotel.dart';
+import 'package:licenta_app/models/category.dart';
 
-final formatter = DateFormat.yMd();
+import '../models/users_hotel.dart';
 
 class NewHotel extends StatefulWidget {
-  const NewHotel({Key? key, required this.onAddHotel}) : super(key: key);
-
-  final void Function(Hotels hotels) onAddHotel;
+  const NewHotel({Key? key}) : super(key: key);
 
   @override
-  State<NewHotel> createState() {
-    return _NewHotelState();
-  }
+  State<NewHotel> createState() => _NewHotelState();
 }
 
 class _NewHotelState extends State<NewHotel> {
-  final _titleController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var _hotelName = '';
+  var _hotelDescription = '';
+  var _hotelPrice = '';
   DateTime? _selectedDate;
-  Category _selectedCategory = Category.hotel;
+  var _selectedCategory = availableCategoriesMap[Category.hotel]!;
+
+  void _saveItem() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      Navigator.of(context).pop(
+        Hotels(
+          hotelName: _hotelName,
+          description: _hotelDescription,
+          price: double.parse(_hotelPrice),
+          createdAt: _selectedDate!,
+          category: _selectedCategory,
+        ),
+      );
+    }
+  }
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -37,142 +48,153 @@ class _NewHotelState extends State<NewHotel> {
     });
   }
 
-  void _submitData() {
-    final enteredTitle = _titleController.text.trim();
-    final enteredDescription = _descriptionController.text.trim();
-    final enteredPrice = double.tryParse(_priceController.text);
-    final priceIsInvalid = enteredPrice == null || enteredPrice <= 0;
-
-    if (enteredTitle.isEmpty ||
-        enteredDescription.isEmpty ||
-        priceIsInvalid ||
-        _selectedDate == null) {
-      showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: const Text(
-                  'Invalid input',
-                  style: TextStyle(color: Colors.white),
-                ),
-                content: const Text(
-                  'Please enter valid data',
-                  style: TextStyle(color: Colors.white),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(),
-                    child: const Text('OK'),
-                  )
-                ],
-              ));
-      return;
-    }
-
-    widget.onAddHotel(
-      Hotels(
-        hotelName: enteredTitle,
-        description: enteredDescription,
-        price: enteredPrice,
-        createdAt: _selectedDate!,
-        category: _selectedCategory,
-      ),
-    );
-    Navigator.pop(context);
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _priceController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                  label:
-                      Text('Hotel name',)),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _descriptionController,
-              maxLength: 100,
-              decoration: const InputDecoration(
-                label: Text('Description'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add a new hotel'),
+      ),
+      body: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+          child: Form(
+            key: _formKey,
+            child: Column(children: [
+              TextFormField(
+                maxLength: 50,
+                cursorColor: Colors.white,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.white, fontSize: 17),
+                decoration: const InputDecoration(
+                  labelText: 'Hotel name',
+                ),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length <= 1 ||
+                      value.trim().length > 50) {
+                    return 'Please enter a valid hotel name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _hotelName = value!;
+                },
               ),
-            ),
-            Row(
-              children: [
+              const SizedBox(height: 16),
+              TextFormField(
+                maxLength: 100,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.white, fontSize: 17),
+                decoration: const InputDecoration(
+                  labelText: 'Description',
+                ),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length <= 1 ||
+                      value.trim().length > 50) {
+                    return 'Please enter a valid description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _hotelDescription = value!;
+                },
+              ),
+              Row(children: [
                 Expanded(
-                    child: TextField(
-                  style: const TextStyle(color: Colors.white),
-                  controller: _priceController,
-                  maxLength: 50,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: 'RON ',
-                    label: Text('Price'),
-                  ),
-                )),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        _selectedDate == null
-                            ? 'No date chosen'
-                            : formatter.format(_selectedDate!),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      IconButton(
-                          onPressed: _presentDatePicker,
-                          icon: const Icon(Icons.calendar_month)),
-                    ],
+                  child: TextFormField(
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Colors.white, fontSize: 17),
+                    maxLength: 50,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      prefixText: 'RON ',
+                      labelText: 'Price',
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 1 ||
+                          value.trim().length > 50) {
+                        return 'Please enter a valid price';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _hotelPrice = value!;
+                    },
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                DropdownButton(
-                    value: _selectedCategory,
-                    items: Category.values
-                        .map((category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(
-                              category.name.toUpperCase(),
-                              style: const TextStyle(color: Colors.white),
-                            )))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        if (value == null) {
-                          return;
-                        }
-                        _selectedCategory = value;
-                      });
-                    }),
-                const Spacer(),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Cancel')),
-                ElevatedButton(
-                    onPressed: _submitData, child: const Text('Save hotel')),
-              ],
-            )
-          ],
-        ));
+                const SizedBox(width: 8),
+                Expanded(
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Text(
+                      _selectedDate == null
+                          ? 'No date chosen'
+                          : formatter.format(_selectedDate!),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    IconButton(
+                        onPressed: _presentDatePicker,
+                        icon: const Icon(Icons.calendar_month)),
+                  ]),
+                )
+              ]),
+              const SizedBox(width: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      value: _selectedCategory,
+                      items: [
+                        for (final category in availableCategoriesMap.entries)
+                          DropdownMenuItem(
+                              value: category.value,
+                              child: Row(children: [
+                                Container(
+                                  width: 16,
+                                  height: 16,
+                                  color: category.value.color,
+                                ),
+                                const SizedBox(width: 6),
+                                Text(category.value.title.toUpperCase(),
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ]))
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _formKey.currentState!.reset();
+                      },
+                      child: const Text('Cancel')),
+                  ElevatedButton(
+                      onPressed: _saveItem, child: const Text('Save hotel')),
+                ],
+              )
+            ]),
+          )),
+    );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:licenta_app/models/users_hotel.dart';
 import 'package:licenta_app/widgets/chart/chart_bar.dart';
 
+import '../../models/category.dart';
+
 class Chart extends StatelessWidget {
   const Chart({super.key, required this.hotels});
 
@@ -12,6 +14,7 @@ class Chart extends StatelessWidget {
       HotelsBucket.forCategory(hotels, Category.hotel),
       HotelsBucket.forCategory(hotels, Category.guestHouse),
       HotelsBucket.forCategory(hotels, Category.apartment),
+      HotelsBucket.forCategory(hotels, Category.villa),
     ];
   }
 

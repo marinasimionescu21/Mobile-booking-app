@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:licenta_app/models/dummy_data.dart';
 import 'package:licenta_app/screen/hotels.dart';
 import 'package:licenta_app/widgets/category_grid_item.dart';
 import '../models/category.dart';

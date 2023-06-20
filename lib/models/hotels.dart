@@ -5,8 +5,6 @@ final formatter = DateFormat.yMd();
 
 const uuid = Uuid();
 
-enum Category { hotel, guestHouse, apartment, villa }
-
 enum Affordability { affordable, pricey, luxurious }
 
 class Hotels {

@@ -41,7 +41,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       ));
     }
     if (identifier == 'addPlace') {
-      // ignore: use_build_context_synchronously
       await Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const HomeScreen()));
     }
