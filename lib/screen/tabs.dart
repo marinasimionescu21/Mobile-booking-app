@@ -40,7 +40,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         builder: (ctx) => const FilterScreen(),
       ));
     }
-    if (identifier == 'addPlace') {
+    if (identifier == 'addPlace' && context.mounted) {
       await Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const HomeScreen()));
     }

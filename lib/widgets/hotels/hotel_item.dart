@@ -30,7 +30,7 @@ class HotelItem extends StatelessWidget {
                     children: [
                       Icon(categoryIcons[hotel.category]),
                       const SizedBox(width: 4.0),
-                      Text(hotel.formattedDate),
+                      Text(hotel.createdAt.toString()), //formattedDate),
                     ],
                   )
                 ],

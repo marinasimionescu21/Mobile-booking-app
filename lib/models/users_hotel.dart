@@ -16,12 +16,13 @@ const categoryIcons = {
 
 class Hotels {
   Hotels({
+    required this.id,
     required this.hotelName,
     required this.description,
     required this.price,
     required this.category,
     required this.createdAt,
-  }) : id = uuid.v4();
+  });
 
   final String id;
   final String hotelName;

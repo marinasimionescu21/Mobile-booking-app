@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:licenta_app/models/category.dart';
-
+import 'package:http/http.dart' as http;
 import '../models/users_hotel.dart';
+import 'dart:convert';
 
 class NewHotel extends StatefulWidget {
   const NewHotel({Key? key}) : super(key: key);
@@ -17,19 +18,40 @@ class _NewHotelState extends State<NewHotel> {
   var _hotelPrice = '';
   DateTime? _selectedDate;
   var _selectedCategory = availableCategoriesMap[Category.hotel]!;
+  var _isSending = false;
 
-  void _saveItem() {
+  void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Navigator.of(context).pop(
-        Hotels(
+      setState(() {
+        _isSending = true;
+      });
+      final url = Uri.https(
+          'hotelbookingapp-marina-default-rtdb.firebaseio.com', 'hotels.json');
+      final response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: json.encode({
+            'hotelName': _hotelName,
+            'description': _hotelDescription,
+            'price': _hotelPrice,
+            'createdAt': _selectedDate!.toIso8601String(),
+            'category': _selectedCategory.title,
+          }));
+
+      final Map<String, dynamic> resData = json.decode(response.body);
+      if (!context.mounted) return;
+
+      Navigator.of(context).pop();
+
+      Navigator.of(context).pop(Hotels(
+          id: resData['id'],
           hotelName: _hotelName,
           description: _hotelDescription,
           price: double.parse(_hotelPrice),
-          createdAt: _selectedDate!,
           category: _selectedCategory,
-        ),
-      );
+          createdAt: _selectedDate!));
     }
   }
 
@@ -184,13 +206,21 @@ class _NewHotelState extends State<NewHotel> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _formKey.currentState!.reset();
-                      },
+                      onPressed: _isSending
+                          ? null
+                          : () {
+                              Navigator.pop(context);
+                              _formKey.currentState!.reset();
+                            },
                       child: const Text('Cancel')),
                   ElevatedButton(
-                      onPressed: _saveItem, child: const Text('Save hotel')),
+                      onPressed: _isSending ? null : _saveItem,
+                      child: _isSending
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator())
+                          : const Text('Save hotel')),
                 ],
               )
             ]),
