@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:licenta_app/newPlaces/screens/places.dart';
 import 'package:licenta_app/screen/categories.dart';
 import 'package:licenta_app/screen/filters.dart';
 import 'package:licenta_app/screen/hotel_screen.dart';
 import 'package:licenta_app/screen/hotels.dart';
+import 'package:licenta_app/start_screen.dart';
 import 'package:licenta_app/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:licenta_app/provider/favorites_provider.dart';
 
+import '../first_page.dart';
 import '../provider/filters_provider.dart';
 
 const kInitialFilters = {
@@ -42,7 +45,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }
     if (identifier == 'addPlace' && context.mounted) {
       await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => const HomeScreen()));
+          .push(MaterialPageRoute(builder: (ctx) => const PlacesScreen()));
     }
   }
 
@@ -55,7 +58,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = const HomeScreen();
+      activePage = const FirstPage();
       activePageTitle = 'Map';
     }
 

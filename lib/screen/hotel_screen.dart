@@ -40,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
         'hotelbookingapp-marina-default-rtdb.firebaseio.com', 'hotels.json');
     final response = await http.get(url);
     if (response.body == 'null') {
-      // setState(() {
-      //   _isLoading = false;
-      // });
+      setState(() {
+        _isLoading = false;
+      });
       return [];
     }
 
@@ -61,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           category: category,
           createdAt: DateTime.parse(item.value['createdAt'])));
     }
-    // setState(() {
-    //   _registeredHotels = loadedHotels;
-    //   _isLoading = false;
-    // });
+    setState(() {
+      _registeredHotels = loadedHotels;
+      _isLoading = false;
+    });
     return loadedHotels;
   }
 
