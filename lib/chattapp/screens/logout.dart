@@ -5,20 +5,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../widgets/chat_messages.dart';
 import '../widgets/new_message.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class LogoutScreen extends StatefulWidget {
+  const LogoutScreen({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<LogoutScreen> createState() => _LogoutScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _LogoutScreenState extends State<LogoutScreen> {
   void setupPushNotifications() async {
     final fcm = FirebaseMessaging.instance;
 
     await fcm.requestPermission();
 
-    fcm.subscribeToTopic('chat');
+    fcm.subscribeToTopic('logout');
   }
 
   @override
@@ -43,14 +43,6 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
-        ],
-      ),
-      body: const Column(
-        children: [
-          Expanded(
-            child: ChatMessages(),
-          ),
-          NewMessage(),
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:licenta_app/chattapp/widgets/message_bubble.dart';
 
-
 class ChatMessages extends StatelessWidget {
   const ChatMessages({super.key});
 
@@ -28,7 +27,10 @@ class ChatMessages extends StatelessWidget {
 
         if (!chatSnapshots.hasData || chatSnapshots.data!.docs.isEmpty) {
           return const Center(
-            child: Text('No messages found.'),
+            child: Text(
+              'No messages found.',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
           );
         }
 

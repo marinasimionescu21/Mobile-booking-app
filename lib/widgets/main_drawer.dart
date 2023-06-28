@@ -86,6 +86,23 @@ class MainDrawer extends StatelessWidget {
       ),
       ListTile(
         leading: Icon(
+          Icons.live_tv_sharp,
+          size: 30,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: Text(
+          'Livetour',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+              ),
+        ),
+        onTap: () {
+          onSelectedScreen('livetour');
+        },
+      ),
+      ListTile(
+        leading: Icon(
           Icons.settings,
           size: 30,
           color: Theme.of(context).colorScheme.primary,
@@ -99,6 +116,23 @@ class MainDrawer extends StatelessWidget {
         ),
         onTap: () {
           onSelectedScreen('filters');
+        },
+      ),
+      ListTile(
+        leading: Icon(
+          Icons.exit_to_app,
+          size: 30,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: Text(
+          'Logout',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+              ),
+        ),
+        onTap: () {
+          onSelectedScreen('logout');
         },
       ),
     ]));
