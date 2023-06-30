@@ -3,11 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  audioplayers_windows
+  agora_rtc_engine
   file_selector_windows
   firebase_core
-  permission_handler_windows
-  zego_express_engine
+  geolocator_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

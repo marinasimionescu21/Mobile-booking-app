@@ -1,17 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:licenta_app/chattapp/screens/logout.dart';
 import 'package:licenta_app/newPlaces/screens/places.dart';
 import 'package:licenta_app/screen/categories.dart';
 import 'package:licenta_app/screen/filters.dart';
 import 'package:licenta_app/screen/hotels.dart';
-import 'package:licenta_app/screen/map.dart';
 import 'package:licenta_app/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:licenta_app/provider/favorites_provider.dart';
 
 import '../chattapp/screens/chat.dart';
+import '../map/screens/current_location_screen.dart';
 import '../provider/filters_provider.dart';
+import '../videocall/pages/index.dart';
 
 const kInitialFilters = {
   Filter.afordable: false,
@@ -55,19 +54,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     if (identifier == 'livetour') {
       await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => const ChatScreen()));
-    }
-
-    if (identifier == 'livetour') {
-      await IconButton(
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-        },
-        icon: Icon(
-          Icons.exit_to_app,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      );
+          .push(MaterialPageRoute(builder: (ctx) => const IndexPage()));
     }
   }
 
@@ -80,7 +67,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = const MapPage();
+      activePage = const CurrentLocationScreen();
       activePageTitle = 'Map';
     }
 

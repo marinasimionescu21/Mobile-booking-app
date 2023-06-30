@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../widgets/chat_messages.dart';
@@ -33,17 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('LodgingEaseChat'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ],
       ),
       body: const Column(
         children: [
