@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:licenta_app/chattapp/firebase_options.dart';
 import 'package:licenta_app/screen/tabs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'chattapp/screens/auth.dart';
 import 'chattapp/screens/splash.dart';
+import 'firebase_options.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -22,7 +22,7 @@ final theme = ThemeData(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: 'LodgingEase',
+    name: 'LodgingEase chat app',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const ProviderScope(child: App()));

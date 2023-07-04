@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Category { hotel, guestHouse, apartment, villa }
+enum Category { hotel, guestHouse, apartment, villa, addedByUser }
 
 const availableCategoriesMap = {
   Category.hotel: CategoryOfHotels(
@@ -45,6 +45,11 @@ const availableCategories = [
     id: 'c4',
     title: 'Villas',
     color: Colors.lightBlueAccent,
+  ),
+  CategoryOfHotels(
+    id: 'c5',
+    title: 'Added by users',
+    color: Colors.blueGrey,
   ),
 ];
 

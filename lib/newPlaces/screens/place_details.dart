@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:licenta_app/chattapp/screens/chat.dart';
 import 'package:licenta_app/newPlaces/screens/map.dart';
 
 import '../models/place.dart';
@@ -27,6 +28,27 @@ class PlaceDetailScreen extends StatelessWidget {
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
+            ),
+            Row(
+              children: [
+                Text(
+                  place.description,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                ),
+                const Spacer(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const ChatScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.chat_bubble_outline)),
+              ],
             ),
             Positioned(
                 bottom: 0,

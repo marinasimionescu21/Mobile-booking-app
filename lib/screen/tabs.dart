@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:licenta_app/newPlaces/screens/places.dart';
 import 'package:licenta_app/screen/categories.dart';
@@ -11,6 +13,7 @@ import '../chattapp/screens/chat.dart';
 import '../map/screens/current_location_screen.dart';
 import '../provider/filters_provider.dart';
 import '../videocall/pages/index.dart';
+import '../widgets/profile.dart';
 
 const kInitialFilters = {
   Filter.afordable: false,
@@ -55,6 +58,10 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     if (identifier == 'livetour') {
       await Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const IndexPage()));
+    }
+    if (identifier == 'profile') {
+      await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (ctx) => const ProfileScreen()));
     }
   }
 

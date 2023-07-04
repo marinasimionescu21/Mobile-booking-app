@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'dart:async';
@@ -52,7 +54,7 @@ class _CallPageState extends State<CallPage> {
 
     _addAgoraEventHandlers();
     VideoEncoderConfiguration config = VideoEncoderConfiguration();
-    config.dimensions = VideoDimensions(width: 1920, height: 1080);
+    config.dimensions = const VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(config);
     await _engine.joinChannel(token, widget.channelName!, null, 0);
   }
@@ -96,7 +98,7 @@ class _CallPageState extends State<CallPage> {
   Widget _viewRows() {
     final List<StatefulWidget> list = [];
     if (widget.role == ClientRole.Broadcaster) {
-      list.add(RtcLocalView.SurfaceView());
+      list.add(const RtcLocalView.SurfaceView());
     }
 
     for (var uid in _users) {

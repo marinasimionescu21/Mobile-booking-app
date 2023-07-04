@@ -8,7 +8,6 @@ import '../providers/user_places.dart';
 import '../widgets/image_input.dart';
 import '../widgets/location_input.dart';
 
-
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
 
@@ -20,11 +19,13 @@ class AddPlaceScreen extends ConsumerStatefulWidget {
 
 class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
   File? _selectedImage;
   PlaceLocation? _selectedLocation;
 
   void _savePlace() {
     final enteredTitle = _titleController.text;
+    final enteredDescription = _descriptionController.text;
 
     if (enteredTitle.isEmpty ||
         _selectedImage == null ||
@@ -32,9 +33,8 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
       return;
     }
 
-    ref
-        .read(userPlacesProvider.notifier)
-        .addPlace(enteredTitle, _selectedImage!, _selectedLocation!);
+    ref.read(userPlacesProvider.notifier).addPlace(
+        enteredTitle, _selectedImage!, _selectedLocation!, enteredDescription);
 
     Navigator.of(context).pop();
   }
@@ -42,6 +42,7 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   @override
   void dispose() {
     _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -58,6 +59,13 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
             TextField(
               decoration: const InputDecoration(labelText: 'Title'),
               controller: _titleController,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: 'Description'),
+              controller: _descriptionController,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
               ),

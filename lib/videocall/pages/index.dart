@@ -77,9 +77,9 @@ class _IndexPageState extends State<IndexPage> {
               ),
               ElevatedButton(
                 onPressed: onJoin,
-                child: const Text('Join'),
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 40)),
+                child: const Text('Join'),
               )
             ],
           ),

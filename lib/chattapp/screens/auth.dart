@@ -31,7 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submit() async {
     final isValid = _form.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
+    if (!isValid || (!_isLogin && _selectedImage == null)) {
       // show error message ...
       return;
     }
@@ -43,8 +43,10 @@ class _AuthScreenState extends State<AuthScreen> {
         _isAuthenticating = true;
       });
       if (_isLogin) {
-        final userCredentials = await _firebase.signInWithEmailAndPassword(
+        await _firebase.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
+        // final userCredentials = await _firebase.signInWithEmailAndPassword(
+        //     email: _enteredEmail, password: _enteredPassword);
       } else {
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
