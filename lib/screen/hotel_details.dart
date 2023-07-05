@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/hotels.dart';
+import '../provider/booked_provider.dart';
 import '../provider/favorites_provider.dart';
 
 class HotelDetailsScreen extends ConsumerWidget {
@@ -15,6 +16,8 @@ class HotelDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favoriteHotels = ref.watch(favoritesHotelProvider);
     final isFavorite = favoriteHotels.contains(hotel);
+    final bookedHotels = ref.watch(bookedsHotelProvider);
+    final isBooked = bookedHotels.contains(hotel);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +38,23 @@ class HotelDetailsScreen extends ConsumerWidget {
               );
             },
             icon: Icon(isFavorite ? Icons.star : Icons.star_border),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              final wasAdded = ref
+                  .read(bookedsHotelProvider.notifier)
+                  .toggleHotelBookedStatus(hotel);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(wasAdded ? 'Hotel booked' : 'Hotel removed'),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            },
+            icon:
+                Icon(isBooked ? Icons.book_online : Icons.book_online_outlined),
+          ),
         ],
       ),
       body: Column(

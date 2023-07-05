@@ -53,6 +53,23 @@ class MainDrawer extends StatelessWidget {
       ),
       ListTile(
         leading: Icon(
+          Icons.map,
+          size: 30,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: Text(
+          'Map',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+              ),
+        ),
+        onTap: () {
+          onSelectedScreen('map');
+        },
+      ),
+      ListTile(
+        leading: Icon(
           Icons.add_home_outlined,
           size: 30,
           color: Theme.of(context).colorScheme.primary,

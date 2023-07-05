@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:licenta_app/screen/hotels.dart';
+
+import '../screen/tabs.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -13,6 +16,18 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+
+  void _setScreen() async {
+    await Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => Scaffold(
+              appBar: AppBar(
+                title: const Text('Your bookings'),
+              ),
+              body: HotelsScreen(
+                hotels: hotelsBooked,
+              ),
+            )));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +70,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 50),
+        TextButton(onPressed: _setScreen, child: const Text('Your bookings'))
       ]),
     );
   }

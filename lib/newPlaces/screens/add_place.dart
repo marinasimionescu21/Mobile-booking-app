@@ -78,7 +78,7 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
             ),
             const SizedBox(height: 10),
             LocationInput(
-              onSelectPlace: (location) {
+              onSelectLocation: (location) {
                 _selectedLocation = location;
               },
             ),
