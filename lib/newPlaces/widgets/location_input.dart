@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:licenta_app/newPlaces/models/place.dart';
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart' as geolocator;
 
 import '../screens/map.dart';
 
@@ -79,9 +80,12 @@ class _LocationInputState extends State<LocationInput> {
       _isGettingLocation = true;
     });
 
-    locationData = await location.getLocation();
-    final lat = locationData.latitude;
-    final lng = locationData.longitude;
+    // locationData = await location.getLocation();
+    // final lat = locationData.latitude;
+    // final lng = locationData.longitude;
+    geolocator.Position locationGeo = await _determinePosition();
+    final lat = locationGeo.latitude;
+    final lng = locationGeo.longitude;
 
     if (lat == null || lng == null) {
       return;
@@ -102,6 +106,36 @@ class _LocationInputState extends State<LocationInput> {
     }
 
     _savePlace(pickedLocation.latitude, pickedLocation.longitude);
+  }
+
+  Future<geolocator.Position> _determinePosition() async {
+    bool serviceEnabled;
+    geolocator.LocationPermission permission;
+
+    serviceEnabled = await geolocator.Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await geolocator.Geolocator.checkPermission();
+
+    if (permission == geolocator.LocationPermission.denied) {
+      permission = await geolocator.Geolocator.requestPermission();
+
+      if (permission == geolocator.LocationPermission.denied) {
+        return Future.error("Location permission denied");
+      }
+    }
+
+    if (permission == geolocator.LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied');
+    }
+
+    geolocator.Position position =
+        await geolocator.Geolocator.getCurrentPosition();
+
+    return position;
   }
 
   @override
